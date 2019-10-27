@@ -1,14 +1,41 @@
 import turtle
 from math import pi, sin, cos
 
+# Déclaration des variables : 
+p_x = 0
+p_y = 0
+p_z = 0
+point = (p_x, p_y, p_z)
+
+longueur = 0
+
+col1 = 'red'
+col2 = 'black'
+col3 = 'blue'
+col = (col1, col2, col3)
+
+c_x = 0
+c_y = 0
+c_z = 0
+centre = (c_x, c_y, c_z)
+
+rayon = 0
+
+
+
+
+# code déformation
+
 def deformation(point, centre, rayon):
     """renvoie le point sans le modifier"""
     return point
 
- 
+
+
+# code pavé
+
 def pave(abscisse_centre, ordonnee_centre, longueur_arete, color1, color2, color3):
-    
-    
+
     turtle.up()
     turtle.goto(abscisse_centre, ordonnee_centre)
     turtle.down()
