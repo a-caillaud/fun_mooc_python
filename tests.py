@@ -1,123 +1,117 @@
 import turtle
 from math import pi, sin, cos, sqrt, acos, asin, atan2
+from deformation import deformation
 
 
-# p_x = 0
-# p_y = 0
-# p_z = 0
-# point = p_x, p_y, p_z
-
-# longueur = 0
-
-# col1 = 'red'
-# col2 = 'black'
-# col3 = 'blue'
-# col = col1, col2, col3
-
-# c_x = 0 
-# c_y = 0
-# c_z = 0
-# centre = c_x, c_y, c_z
-
-# rayon = 0
-
-
-
-# def deformation(point, centre, rayon):
-#     x, y, z = point
-#     xprim, yprim, zprim = x, y, z
-#     xprim = x * 3
-#     yprim = y * 2
-#     zprim = z
-#     print(xprim, yprim, zprim)
-#     return xprim, yprim, zprim
-
-
-
-def deformation(p, centre, rayon):
-    """ Calcul des coordonnées d'un point suite à la déformation engendrée par la sphère émergeante
-        Entrées : 
-          p : coordonnées (x, y, z) du point du dalage à tracer (z = 0) AVANT déformation
-          centre : coordonnées (X0, Y0, Z0) du centre de la sphère
-          rayon : rayon de la sphère
-        Sorties : coordonnées (xprim, yprim, zprim) du point du dallage à tracer APRÈS déformation
-    """
-    x, y, z = p
-    xprim, yprim, zprim = x, y, z
-    xc, yc, zc = centre
-    if rayon**2 > zc**2:
-        zc = zc if zc <= 0 else -zc
-        r = sqrt(
-            (x - xc) ** 2 + (y - yc) ** 2)                  # distance horizontale depuis le point à dessiner jusqu'à l'axe de la sphère
-        rayon_emerge = sqrt(rayon ** 2 - zc ** 2)           # rayon de la partie émergée de la sphère
-        rprim = rayon * sin(acos(-zc / rayon) * r / rayon_emerge)
-        if 0 < r <= rayon_emerge:                 # calcul de la déformation dans les autres cas
-            xprim = xc + (x - xc) * rprim / r               # les nouvelles coordonnées sont proportionnelles aux anciennes
-            yprim = yc + (y - yc) * rprim / r
-        if r <= rayon_emerge:             
-            beta = asin(rprim / rayon) 
-            zprim = zc + rayon * cos(beta) 
-            if centre[2] > 0:
-                zprim = -zprim
-    return (xprim, yprim, zprim)
-
-if __name__ == "__main__": # code de test
-    for i in range(-150,150,50):
-        for j in range(-150,150,50):
-            print(deformation((i,j,0), (0,0,100), 100))
-        print()
-
-
-
-
-
-
-
-
-
-def hexagone(point, longueur, col, centre, rayon):
-    
-    p_x, p_y, p_z = point
+def hexagone(point, longueur, col, centre, rayon): # dessine un hexagone en tenant compte de la déformation
+    p_x, p_y = point # attribution des tupples point et couleurs
     col1, col2, col3 = col
-    c_x, c_y, c_z = centre
-    p = point
-    
+
+    turtle.speed(10) # on lance le dessin de l'hexagone
     turtle.up()
-    turtle.goto(p_x, p_y)
+
+    # Face 1
+    p = p_x, p_y, 0
+    xprim, yprim, zprim = deformation(p, centre, rayon)
+    turtle.goto(xprim, yprim)
+
     turtle.down()
 
     turtle.color(col[0])
     turtle.begin_fill()
-    turtle.goto(p_x + longueur * cos(0), p_y + longueur * sin(0))
-    turtle.goto(p_x + longueur * cos(pi / 3), p_y + longueur * sin(pi / 3))
-    turtle.goto(p_x + longueur * cos(pi * 2 / 3), p_y + longueur * sin(pi * 2 / 3))
-    turtle.goto(p_x, p_y)
+
+    p = p_x + longueur * cos(0), p_y + longueur * sin(0), 0
+    xprim, yprim, zprim = deformation(p, centre, rayon)
+    turtle.goto(xprim, yprim)
+
+    p = p_x + longueur * cos(pi / 3), p_y + longueur * sin(pi / 3), 0
+    xprim, yprim, zprim = deformation(p, centre, rayon)
+    turtle.goto(xprim, yprim)
+
+    p = p_x + longueur * cos(pi * 2 / 3), p_y + longueur * sin(pi * 2 / 3), 0
+    xprim, yprim, zprim = deformation(p, centre, rayon)
+    turtle.goto(xprim, yprim)
+
+
+    p = p_x, p_y, 0
+    xprim, yprim, zprim = deformation(p, centre, rayon)
+    turtle.goto(xprim, yprim)
+
     turtle.end_fill()
     turtle.up()
-    turtle.goto(p_x + longueur * cos(pi * 2 / 3), p_y + longueur * sin(pi * 2 / 3))
+
+
+    # Face 2
+    p = p_x + longueur * cos(pi * 2 / 3), p_y + longueur * sin(pi * 2 / 3), 0
+    xprim, yprim, zprim = deformation(p, centre, rayon)
+    turtle.goto(xprim, yprim)
+    
     turtle.down()
     turtle.color(col[1])
     turtle.begin_fill()
-    turtle.goto(p_x - longueur, p_y)
-    turtle.goto(p_x + longueur * cos(4 / 3 * pi), p_y + longueur * sin(4 / 3 * pi))
-    turtle.goto(p_x, p_y)
+
+    p = p_x - longueur, p_y, 0
+    xprim, yprim, zprim = deformation(p, centre, rayon)
+    turtle.goto(xprim, yprim)
+
+    p = p_x + longueur * cos(4 / 3 * pi), p_y + longueur * sin(4 / 3 * pi), 0
+    xprim, yprim, zprim = deformation(p, centre, rayon)
+    turtle.goto(xprim, yprim)
+
+    p = p_x, p_y, 0
+    xprim, yprim, zprim = deformation(p, centre, rayon)
+    turtle.goto(xprim, yprim)
+
     turtle.end_fill()
     turtle.up()
-    turtle.goto(p_x + longueur * cos(4 / 3 * pi), p_y + longueur * sin(4 / 3 * pi))
+
+    # Face 3
+    p = p_x + longueur * cos(4 / 3 * pi), p_y + longueur * sin(4 / 3 * pi), 0
+    xprim, yprim, zprim = deformation(p, centre, rayon)
+    turtle.goto(xprim, yprim)
+
     turtle.down()
     turtle.color(col[2])
     turtle.begin_fill()
-    turtle.goto(p_x + longueur * cos(5 / 3 * pi), p_y + longueur * sin(5 / 3 * pi))
-    turtle.goto(p_x + longueur * cos(0), p_y + longueur * sin(0))
-    turtle.goto(p_x, p_y)
+
+    p = p_x + longueur * cos(5 / 3 * pi), p_y + longueur * sin(5 / 3 * pi), 0
+    xprim, yprim, zprim = deformation(p, centre, rayon)
+    turtle.goto(xprim, yprim)
+
+    p = p_x + longueur * cos(0), p_y + longueur * sin(0), 0
+    xprim, yprim, zprim = deformation(p, centre, rayon)
+    turtle.goto(xprim, yprim)
+
+    p = p_x, p_y, 0
+    xprim, yprim, zprim = deformation(p, centre, rayon)
+    turtle.goto(xprim, yprim)
+
     turtle.end_fill()
-    turtle.hideturtle()
-    turtle.done()
-    print(point)
     
 
+def pavage (inf_gauche, sup_droit, longueur,col,centre,r):
+    n = 1 #compteur de ligne
+    angle = pi / 3 
+    sup_droit1 = sup_droit # position du polygone apres chaque ligne
+    pas = 3 * longueur # espacement entre deux polygones
+    new_inf_gauche = int(inf_gauche - longueur * (1 + cos(angle))) # position de depart  du polygone pour les lignes paires
+    new_sup_droit = int(sup_droit + longueur * (1 + cos(angle)))# position finale du polygone pour les lignes paires
 
-# hexagone((2, 2, 0), 50, ('red', 'blue', 'grey'), (0, 0, 0), 0)
-xprim, yprim, zprim = deformation((10, 5, 2), (5, 5, 5), 50)
-# print(xprim, yprim, zprim)
-hexagone((xprim, yprim, zprim), 50, ('red', 'blue', 'grey'), (0, 0, 0), 0)
+    while sup_droit1 > inf_gauche: #tant le polygone n'est pas arrivé a la derniere ligne de la fenetre
+        if n % 2 != 0: #cas d'une ligne impaire
+            for x in range(inf_gauche, sup_droit, pas):
+                point = (x, sup_droit1)
+                hexagone(point,longueur,col,centre, r)
+            n+=1
+        else: #cas d'une ligne paire
+            for x in range(new_inf_gauche, new_sup_droit, pas):
+                point = (x, sup_droit1)
+                hexagone(point,longueur,col,centre, r)
+            n+=1
+        sup_droit1 = sup_droit1-longueur *  sin(angle)
+    turtle.hideturtle()
+    turtle.getcanvas().postscript(file="pavage.eps")
+    turtle.done()
+
+
+pavage(-305, 305, 60, ('blue', 'black', 'red'), (-50, -50, -50), 240)
