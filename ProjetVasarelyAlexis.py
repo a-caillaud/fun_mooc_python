@@ -2,7 +2,7 @@
 Projet Vasarely (version 1)
 Auteur : Alexis
 Date : 27/10/2019
-Ce programme Python produits des tableaux d’art optique de tendance 'Vasarely'
+Ce programme Python dessine des tableaux d’art optique de tendance 'Vasarely'
 Ces tableaux représentent des pavages hexagonaux, vus d’en haut, 
 formés avec des losanges de couleurs différentes, déformés par une boule.
 Entrée : paramètres globaux proposé dans le sujet Vasarely (code principal)
@@ -12,30 +12,20 @@ Sortie : fenêtre de visualisation du tableau de Vasarely
 
 # importation des modules
 
-import turtle # module le dessin des pavé
-from math import pi, sin, cos, # permet de calculer les coordonnées des sommets dans les hexagones
+import turtle # module le dessin des pavéd
+from math import pi, sin, cos # permet de calculer les coordonnées des sommets dans les hexagones
 from deformation import deformation # calcule la déformation des coordonnées des hexagones
 
 
 # Définition des constantes globales
-INF_GAUCHE = int(input("Donnez la coordonnée du bord inférieur gauche de la fenêtre de visualisation : "))
-SUP_DROIT = int(input("Donnez la coordonnée du bord supérieur droit de la fenêtre de visualisation : "))
-LONGUEUR = int(input("Donnez la longueur d’un segment de pavé avant sa déformation : "))
-COULEUR_1 = input("Donnez la couleur de la face nord-est du pavé (en anglais): ")
-COULEUR_2 = input("Donnez la couleur de la face ouest du pavé (en anglais): ")
-COULEUR_3 = input("Donnez la couleur de la face sud-est du pavé (en anglais): ")
-CENTRE_X = int(input("Donnez la coordonnée x du centre de la sphère déformante : "))
-CENTRE_X = int(input("Donnez la coordonnée x du centre de la sphère déformante : "))
-CENTRE_Y = int(input("Donnez la coordonnée z du centre de la sphère déformante : "))
-CENTRE_Z = int(input("Donnez la coordonnée y du centre de la sphère déformante : "))
-RAYON = int(input("Donnez le rayon de la sphère déformante : ")
+# pas de constante globale dans ce code
 
 # Définition des fonctions
 
 def face1(point, longueur, col, centre, rayon):
     """
     La fonction 'face1' dessine la première face de l'hexagone, en utilisant la fontion déformation, à partir des paramètres suivants : 
-    - point point sous forme d’un triple (tuple de trois composantes) donnant la valeur des trois coordonnées, du point avant déformation où l’hexagone doit être peint,
+    - un point sous forme d’un triple (tuple de trois composantes) donnant la valeur des trois coordonnées, correspondant au point avant déformation où l’hexagone doit être peint,
     - la distance (avant déformation) longueur entre le centre et n’importe quel coin de l’hexagone,
     - tuple col contenant les trois couleurs (col1, col2, col3) qui vont être utilisées pour dessiner les hexagones,
     - Le centre sous forme de triple (c_x, c_y, c_z) qui donne le centre de la sphère de déformation,
@@ -46,7 +36,7 @@ def face1(point, longueur, col, centre, rayon):
     p = p_x, p_y, 0 # on attibue les coordonnées d'origine à la variable p, qui est utilisée dans la fonction déformation
     xprim, yprim, zprim = deformation(p, centre, rayon) # on récupere les coordonnées après déformation par la fonction déformation
     turtle.goto(xprim, yprim) # on se rend aux coordonnées calculées par la fonction déformation
-    turtle.down() # on descend la tortue pour commencer à dessiners
+    turtle.down() # on descend la tortue pour commencer à dessiner
     turtle.color(col[0]) # on dessine avec la couleur correspondante dans le tupple
     turtle.begin_fill() # on remplie la forme que l'on dessine avec la couleur choisie à la ligne précédente
     p = p_x + longueur * cos(0), p_y + longueur * sin(0), 0
@@ -67,7 +57,7 @@ def face1(point, longueur, col, centre, rayon):
 def face2(point, longueur, col, centre, rayon):
     """
     La fonction 'face2' dessine la seconde face de l'hexagone, en utilisant la fontion déformation, à partir des paramètres suivants : 
-    - point point sous forme d’un triple (tuple de trois composantes) donnant la valeur des trois coordonnées, du point avant déformation où l’hexagone doit être peint,
+    - un point sous forme d’un triple (tuple de trois composantes) donnant la valeur des trois coordonnées, correspondant au point avant déformation où l’hexagone doit être peint,
     - la distance (avant déformation) longueur entre le centre et n’importe quel coin de l’hexagone,
     - tuple col contenant les trois couleurs (col1, col2, col3) qui vont être utilisées pour dessiner les hexagones,
     - Le centre sous forme de triple (c_x, c_y, c_z) qui donne le centre de la sphère de déformation,
@@ -93,11 +83,10 @@ def face2(point, longueur, col, centre, rayon):
     turtle.end_fill()
     turtle.up()
 
-
 def face3(point, longueur, col, centre, rayon):
     """
     La fonction 'face3' dessine la troisième face de l'hexagone, en utilisant la fontion déformation, à partir des paramètres suivants : 
-    - point point sous forme d’un triple (tuple de trois composantes) donnant la valeur des trois coordonnées, du point avant déformation où l’hexagone doit être peint,
+    - un point sous forme d’un triple (tuple de trois composantes) donnant la valeur des trois coordonnées, correspondant au point avant déformation où l’hexagone doit être peint,
     - la distance (avant déformation) longueur entre le centre et n’importe quel coin de l’hexagone,
     - tuple col contenant les trois couleurs (col1, col2, col3) qui vont être utilisées pour dessiner les hexagones,
     - Le centre sous forme de triple (c_x, c_y, c_z) qui donne le centre de la sphère de déformation,
@@ -122,33 +111,31 @@ def face3(point, longueur, col, centre, rayon):
     turtle.goto(xprim, yprim)
     turtle.end_fill()
 
-
 def hexagone(point, longueur, col, centre, rayon): # dessine un hexagone en tenant compte de la déformation
     """
     La fonction 'hexagone' dessine un pavé en 3D en utilisant les fonctions face1, face2 et face3, à partir des paramètres suivants : 
-    - point point sous forme d’un triple (tuple de trois composantes) donnant la valeur des trois coordonnées, du point avant déformation où l’hexagone doit être peint,
+    - un point sous forme d’un triple (tuple de trois composantes) donnant la valeur des trois coordonnées, correspondant au point avant déformation où l’hexagone doit être peint,
     - la distance (avant déformation) longueur entre le centre et n’importe quel coin de l’hexagone,
     - tuple col contenant les trois couleurs (col1, col2, col3) qui vont être utilisées pour dessiner les hexagones,
-    - LE centre sous forme de triple (c_x, c_y, c_z) qui donne le centre de la sphère de déformation,
+    - Le centre sous forme de triple (c_x, c_y, c_z) qui donne le centre de la sphère de déformation,
     - le rayon de la sphère de déformation.
     """
-    turtle.speed(10) # on accèlere la vitesse de dessine de l'hexagone
+    turtle.speed(10) # on accèlere la vitesse de dessin de l'hexagone
     turtle.up() # on relève la tortue pour ne pas dessiner
 
     face1(point, longueur, col, centre, rayon)
     face2(point, longueur, col, centre, rayon)
     face3(point, longueur, col, centre, rayon)
 
-
 def pavage(inf_gauche, sup_droit, longueur,col,centre,r):
     """
     La fonction 'pavage' génère le pavage hexaognal et la déformation à partir de la fonction 'hexagone' et et des paramètes suivants : 
-    inf_gauche : (valeur entière) donnant les coordonnées (inf_gauche, inf_gauche) du bord inférieur gauche de la fenêtre de visualisation ;
-    sup_droit : (valeur entière) donnant les coordonnées (sup_droit, sup_droit) du bord supérieur droit de la fenêtre de visualisation ;
-    longueur : (valeur entière) longueur d’un segment de pavé (avant déformation) ;
-    col : (triple de chaîne de caractères) donnant les trois couleurs des pavés ;
-    centre : (trois entiers) donnant les coordonnées du centre de la sphère déformante ;
-    r : (entier) donnant le rayon de la sphère déformante.
+    inf_gauche : (valeur entière) donnant les coordonnées (inf_gauche, inf_gauche) du bord inférieur gauche de la fenêtre de visualisation
+    sup_droit : (valeur entière) donnant les coordonnées (sup_droit, sup_droit) du bord supérieur droit de la fenêtre de visualisation
+    longueur : (valeur entière) longueur d’un segment de pavé (avant déformation)
+    col : (triple de chaîne de caractères) donnant les trois couleurs des pavés
+    centre : (trois entiers) donnant les coordonnées du centre de la sphère déformante
+    r : (entier) donnant le rayon de la sphère déformante
     """
     n = 1 #compteur de ligne
     angle = pi / 3  # angle utilisé pour calculer les positions de départ et finale d'une ligne de pavage
@@ -171,11 +158,9 @@ def pavage(inf_gauche, sup_droit, longueur,col,centre,r):
             n+=1
         sup_droit1 = sup_droit1-longueur *  sin(angle) # on calucule la nouvelle coordonnées sup_droit1 après le test paire vs impaire
 
-
-
 # Code principal
 
-pavage(INF_GAUCHE, SUP_DROIT, LONGUEUR, (COULEUR_1, COULEUR_2, COULEUR_3), (CENTRE_X, CENTRE_Y, CENTRE_Z), RAYON) # avec les paramètres dans le sujet : 
+pavage(-305, 305, 20, ("Blue", "Red", "Black"), (-50, -50, -50), 200) # avec les paramètres dans le sujet
 turtle.hideturtle() # on cache la tortue
 turtle.getcanvas().postscript(file="fun_mooc_python/pavage.eps") # on sauverage le tableau
 turtle.done() # on arrete le module turtle
