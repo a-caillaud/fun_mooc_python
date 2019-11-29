@@ -1,0 +1,12 @@
+def my_pow(m, b):
+    result = []
+    for i in range(m-1):
+        x = b**(i+1)
+        result.append(x)
+    print(result)
+
+
+
+# code global
+
+my_pow(3, 5.0)
